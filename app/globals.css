@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --egyptian-gold: 41 58% 59%;
+  --sand: 38 58% 76%;
+  --egyptian-blue: 205 50% 29%;
+  --papyrus: 43 58% 89%;
+  
+  --foreground: var(--egyptian-blue);
+  --background: var(--papyrus);
+  
+  --card: 0 0% 100%;
+  --card-foreground: var(--egyptian-blue);
+  
+  --border: 0 0% 89.8%;
+  --input: 0 0% 89.8%;
+  
+  --primary: var(--egyptian-gold);
+  --primary-foreground: 0 0% 98%;
+  
+  --secondary: var(--sand);
+  --secondary-foreground: var(--egyptian-blue);
+  
+  --accent: var(--egyptian-blue);
+  --accent-foreground: var(--papyrus);
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --ring: var(--egyptian-gold);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --egyptian-gold: 41 58% 59%;
+  --sand: 38 58% 76%;
+  --egyptian-blue: 205 50% 29%;
+  --papyrus: 43 58% 89%;
+  
+  --foreground: var(--papyrus);
+  --background: 230 14% 10%;
+  
+  --card: 230 14% 10%;
+  --card-foreground: var(--papyrus);
+  
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  
+  --primary: var(--egyptian-gold);
+  --primary-foreground: 0 0% 98%;
+  
+  --secondary: var(--sand);
+  --secondary-foreground: var(--egyptian-blue);
+  
+  --accent: var(--egyptian-blue);
+  --accent-foreground: var(--papyrus);
+  
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --ring: var(--egyptian-gold);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground min-h-screen;
+    background-image: url('/images/papyrus-bg.png');
+    background-size: repeat;
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-cormorant font-semibold;
+  }
+  p, span, a, button, input, textarea {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  .gold-gradient {
+    @apply bg-gradient-to-r from-[#DFBD69] via-[#F2DC9E] to-[#C49B66];
+  }
+  
+  .section-title {
+    @apply font-cormorant text-4xl md:text-5xl text-center mb-10 relative text-egyptian-blue;
+  }
+  
+  .section-title::after {
+    content: "";
+    @apply block w-24 h-1 gold-gradient mx-auto mt-4;
+  }
+  
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 py-16 md:py-24;
+  }
+
+  .egyptian-card {
+    @apply rounded-md overflow-hidden border-2 border-egyptian-gold bg-papyrus/80 shadow-lg p-6;
+    background-image: url('/images/papyrus-texture.png');
+    background-size: cover;
+    background-blend-mode: overlay;
+    backdrop-filter: blur(8px);
+    transform-style: preserve-3d;
+  }
+  
+  .text-golden {
+    @apply text-transparent bg-clip-text gold-gradient;
+  }
+  
+  .btn-primary {
+    @apply gold-gradient text-white font-medium py-3 px-6 rounded-md shadow-md 
+           hover:shadow-lg transition-all duration-300 transform hover:scale-105
+           relative overflow-hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-white/20 transform -translate-x-full;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: shimmer 2s infinite;
+  }
+  
+  .btn-secondary {
+    @apply bg-egyptian-blue text-papyrus font-medium py-3 px-6 rounded-md 
+           shadow-md hover:shadow-lg transition-all duration-300 transform 
+           hover:scale-105 relative overflow-hidden;
+  }
+  
+  .animated-border {
+    @apply relative overflow-hidden;
+    &::before {
+      content: '';
+      @apply absolute inset-0 gold-gradient opacity-0 transition-opacity duration-300;
+      z-index: -1;
+    }
+    &:hover::before {
+      @apply opacity-70;
+    }
+  }
+
+  .parallax-section {
+    @apply relative overflow-hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300;
+    &:hover {
+      filter: drop-shadow(0 0 8px theme('colors.egyptian-gold'));
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rotate3d {
+  0% {
+    transform: rotate3d(1, 1, 1, 0deg);
+  }
+  100% {
+    transform: rotate3d(1, 1, 1, 360deg);
+  }
+}
+
+.swiper-pagination-bullet {
+  @apply w-3 h-3 bg-egyptian-gold/50 transition-all duration-300;
+}
+
+.swiper-pagination-bullet-active {
+  @apply w-6 bg-egyptian-gold;
+}
+
+.portfolio-swiper .swiper-button-next,
+.portfolio-swiper .swiper-button-prev {
+  @apply text-egyptian-gold opacity-50 transition-opacity duration-300 hover:opacity-100;
+}
+
+.scroll-indicator {
+  @apply fixed bottom-8 right-8 z-50 opacity-0 transition-opacity duration-300;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.cursor-glow {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, theme('colors.egyptian-gold'), transparent 70%);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  transition: transform 0.15s ease-out;
+}
+
+.magnetic-button {
+  @apply relative overflow-hidden transition-transform duration-300;
+  transform-style: preserve-3d;
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+  }
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(
+    135deg,
+    theme('colors.egyptian-gold'),
+    theme('colors.sand'),
+    theme('colors.egyptian-blue')
+  );
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
